@@ -46,7 +46,7 @@ OPTIONS.boot_variable_file = None
 METADATA_NAME = 'META-INF/com/android/metadata'
 METADATA_PROTO_NAME = 'META-INF/com/android/metadata.pb'
 UNZIP_PATTERN = ['IMAGES/*', 'META/*', 'OTA/*',
-                 'RADIO/*', '*/build.prop', '*/default.prop', '*/build.default', "*/etc/vintf/*"]
+                 'RADIO/*', 'INSTALL/*', '*/build.prop', '*/default.prop', '*/build.default', "*/etc/vintf/*"]
 SECURITY_PATCH_LEVEL_PROP_NAME = "ro.build.version.security_patch"
 
 
