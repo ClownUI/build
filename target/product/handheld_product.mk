@@ -26,14 +26,12 @@ PRODUCT_PACKAGES += \
     Calendar \
     Contacts \
     DeskClock \
-    Gallery2 \
     Music \
     preinstalled-packages-platform-handheld-product.xml \
-    QuickSearchBox \
     SettingsIntelligence \
     frameworks-base-overlays
 
-ifeq ($(CUSTOM_BUILD),)
+ifeq ($(CLOWN_BUILD),)
 PRODUCT_PACKAGES += \
     Camera2 \
     LatinIME

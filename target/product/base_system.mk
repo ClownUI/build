@@ -482,7 +482,7 @@ PRODUCT_PACKAGES_DEBUG := \
     unwind_reg_info \
     unwind_symbols \
 
-ifeq ($(CUSTOM_BUILD),)
+ifeq ($(CLOWN_BUILD),)
 PRODUCT_PACKAGES_DEBUG += \
     su
 endif
