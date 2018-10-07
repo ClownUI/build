@@ -6360,6 +6360,15 @@ otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 clown: otapackage
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CLOWN_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(CLOWN_TARGET_PACKAGE) > $(CLOWN_TARGET_PACKAGE).md5sum
+	echo -e "========================================="
+	echo -e "    ____ _                     _   _ ___ 
+	echo -e "   / ___| | _____      ___ __ | | | |_ _|
+	echo -e "  | |   | |/ _ \ \ /\ / / '_ \| | | || |
+	echo -e "  | |___| | (_) \ V  V /| | | | |_| || |
+	echo -e "   \____|_|\___/ \_/\_/ |_| |_|\___/|___|
+	echo -e "                                         
+	echo -e "========================================="
+	echo -e ""
 	@echo "**Package completed"**: $(CLOWN_TARGET_PACKAGE)"
 
 ifeq ($(BOARD_BUILD_RETROFIT_DYNAMIC_PARTITIONS_OTA_PACKAGE),true)
