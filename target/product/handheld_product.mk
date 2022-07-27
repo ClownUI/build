@@ -22,7 +22,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/media_product.mk)
 
 # /product packages
 PRODUCT_PACKAGES += \
-    Browser2 \
     Calendar \
     Contacts \
     DeskClock \
@@ -31,6 +30,11 @@ PRODUCT_PACKAGES += \
     preinstalled-packages-platform-handheld-product.xml \
     SettingsIntelligence \
     frameworks-base-overlays
+
+ifeq ($(TARGET_BUILD_VARIANT),eng)
+PRODUCT_PACKAGES += \
+    Browser2
+endif
 
 ifeq ($(CLOWN_BUILD),)
 PRODUCT_PACKAGES += \
