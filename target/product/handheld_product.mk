@@ -23,6 +23,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/media_product.mk)
 # /product packages
 PRODUCT_PACKAGES += \
     Browser2 \
+    Calendar \
     Contacts \
     DeskClock \
     LatinIME \
@@ -30,6 +31,12 @@ PRODUCT_PACKAGES += \
     preinstalled-packages-platform-handheld-product.xml \
     SettingsIntelligence \
     frameworks-base-overlays
+
+ifeq ($(CLOWN_BUILD),)
+PRODUCT_PACKAGES += \
+    Camera2 \
+    LatinIME
+endif
 
 PRODUCT_PACKAGES_DEBUG += \
     frameworks-base-overlays-debug
