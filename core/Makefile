@@ -6273,23 +6273,23 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(OTA_FROM_TARGET_
 $(call declare-1p-container,$(INTERNAL_OTA_PACKAGE_TARGET),)
 $(call declare-container-license-deps,$(INTERNAL_OTA_PACKAGE_TARGET),$(BUILT_TARGET_FILES_PACKAGE) $(OTA_FROM_TARGET_FILES) $(INTERNAL_OTATOOLS_FILES),$(PRODUCT_OUT)/:/)
 
-RYZEN_TARGET_PACKAGE := $(PRODUCT_OUT)/$(RYZEN_VERSION).zip
+CLOWN_TARGET_PACKAGE := $(PRODUCT_OUT)/$(CLOWN_VERSION).zip
 
-.PHONY: otapackage ryzen
+.PHONY: otapackage clown
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
-ryzen: otapackage
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(RYZEN_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(RYZEN_TARGET_PACKAGE) > $(RYZEN_TARGET_PACKAGE).md5sum
+clown: otapackage
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(CLOWN_TARGET_PACKAGE)
+	$(hide) $(MD5SUM) $(CLOWN_TARGET_PACKAGE) > $(CLOWN_TARGET_PACKAGE).md5sum
 	echo -e "========================================="
-	echo -e "   ____                       ___  ____ 
-	echo -e "  |  _ \ _   _ _______ _ __  / _ \/ ___|
-	echo -e "  | |_) | | | |_  / _ \ '_ \| | | \___ \
-	echo -e "  |  _ <| |_| |/ /  __/ | | | |_| |___) |
-	echo -e "  |_| \_\\__, /___\___|_| |_|\___/|____/
-	echo -e "         |___/                          
+	echo -e "    ____ _                     _   _ ___ 
+	echo -e "   / ___| | _____      ___ __ | | | |_ _|
+	echo -e "  | |   | |/ _ \ \ /\ / / '_ \| | | || |
+	echo -e "  | |___| | (_) \ V  V /| | | | |_| || |
+	echo -e "   \____|_|\___/ \_/\_/ |_| |_|\___/|___|
+	echo -e "                                         
 	echo -e "========================================="
 	echo -e ""
-	@echo "**Package completed"**: $(RYZEN_TARGET_PACKAGE)"
+	@echo "**Package completed"**: $(CLOWN_TARGET_PACKAGE)"
 
 ifeq ($(BOARD_BUILD_RETROFIT_DYNAMIC_PARTITIONS_OTA_PACKAGE),true)
 name := $(product_name)-ota-retrofit-$(FILE_NAME_TAG)

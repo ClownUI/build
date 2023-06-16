@@ -356,8 +356,8 @@ include $(BUILD_SYSTEM)/envsetup.mk
 FIND_LEAVES_EXCLUDES := $(addprefix --prune=, $(SCAN_EXCLUDE_DIRS) .repo .git)
 
 -include vendor/extra/BoardConfigExtra.mk
-ifneq ($(RYZEN_BUILD),)
-include vendor/ryzen/config/BoardConfigRyzen.mk
+ifneq ($(CLOWN_BUILD),)
+include vendor/clown/config/BoardConfigClown.mk
 endif
 
 # The build system exposes several variables for where to find the kernel
@@ -1270,11 +1270,11 @@ dont_bother_goals := out product-graph
 # consistency with those defined in BoardConfig.mk files.
 include $(BUILD_SYSTEM)/android_soong_config_vars.mk
 
-ifneq ($(RYZEN_BUILD),)
-ifneq ($(wildcard device/ryzen/sepolicy/common/sepolicy.mk),)
+ifneq ($(CLOWN_BUILD),)
+ifneq ($(wildcard device/clown/sepolicy/common/sepolicy.mk),)
 ## We need to be sure the global selinux policies are included
 ## last, to avoid accidental resetting by device configs
-$(eval include device/ryzen/sepolicy/common/sepolicy.mk)
+$(eval include device/clown/sepolicy/common/sepolicy.mk)
 endif
 endif
 
