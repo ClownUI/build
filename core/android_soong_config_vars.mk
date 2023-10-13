@@ -26,6 +26,8 @@ $(call add_soong_config_namespace,ANDROID)
 
 # Add variables to the namespace below:
 
+$(call add_soong_config_var,ANDROID,TARGET_DYNAMIC_64_32_MEDIASERVER)
+$(call add_soong_config_var,ANDROID,TARGET_DYNAMIC_64_32_DRMSERVER)
 $(call add_soong_config_var,ANDROID,TARGET_ENABLE_MEDIADRM_64)
 $(call add_soong_config_var,ANDROID,IS_TARGET_MIXED_SEPOLICY)
 ifeq ($(IS_TARGET_MIXED_SEPOLICY),true)
@@ -33,7 +35,6 @@ $(call add_soong_config_var_value,ANDROID,MIXED_SEPOLICY_VERSION,$(BOARD_SEPOLIC
 endif
 $(call add_soong_config_var,ANDROID,BOARD_USES_ODMIMAGE)
 $(call add_soong_config_var,ANDROID,BOARD_USES_RECOVERY_AS_BOOT)
-$(call add_soong_config_var,ANDROID,BOARD_BUILD_SYSTEM_ROOT_IMAGE)
 $(call add_soong_config_var,ANDROID,PRODUCT_INSTALL_DEBUG_POLICY_TO_SYSTEM_EXT)
 
 # Default behavior for the tree wrt building modules or using prebuilts. This
@@ -57,13 +58,6 @@ ifneq ($(CLANG_COVERAGE)$(NATIVE_COVERAGE_PATHS),)
   # modules here. That would duplicate a lot of information, add yet another
   # location  module authors have to update and complicate the logic here.
   # For nowe we will just always build from sources when doing coverage builds.
-  BRANCH_DEFAULT_MODULE_BUILD_FROM_SOURCE := true
-endif
-
-# TODO(b/172063604): Remove once products no longer use dex2oat(d)s.
-# If the product uses dex2oats and/or dex2oatds then build from sources as
-# ART does not currently provide prebuilts of those tools.
-ifneq (,$(filter dex2oats dex2oatds,$(PRODUCT_HOST_PACKAGES)))
   BRANCH_DEFAULT_MODULE_BUILD_FROM_SOURCE := true
 endif
 
@@ -93,9 +87,9 @@ endif
 
 ifneq (,$(MODULE_BUILD_FROM_SOURCE))
   # Keep an explicit setting.
-else ifeq (,$(filter docs sdk win_sdk sdk_addon,$(MAKECMDGOALS))$(findstring com.google.android.conscrypt,$(PRODUCT_PACKAGES)))
+else ifeq (,$(filter docs sdk win_sdk sdk_addon,$(MAKECMDGOALS))$(findstring com.google.android.conscrypt,$(PRODUCT_PACKAGES))$(findstring com.google.android.go.conscrypt,$(PRODUCT_PACKAGES)))
   # Prebuilt module SDKs require prebuilt modules to work, and currently
-  # prebuilt modules are only provided for com.google.android.xxx. If we can't
+  # prebuilt modules are only provided for com.google.android(.go)?.xxx. If we can't
   # find one of them in PRODUCT_PACKAGES then assume com.android.xxx are in use,
   # and disable prebuilt SDKs. In particular this applies to AOSP builds.
   #
@@ -131,6 +125,7 @@ endif
 INDIVIDUALLY_TOGGLEABLE_PREBUILT_MODULES := \
   btservices \
   permission \
+  rkpd \
   uwb \
   wifi \
 
@@ -141,6 +136,10 @@ $(foreach m, $(INDIVIDUALLY_TOGGLEABLE_PREBUILT_MODULES),\
 # Apex build mode variables
 ifdef APEX_BUILD_FOR_PRE_S_DEVICES
 $(call add_soong_config_var_value,ANDROID,library_linking_strategy,prefer_static)
+else
+ifdef KEEP_APEX_INHERIT
+$(call add_soong_config_var_value,ANDROID,library_linking_strategy,prefer_static)
+endif
 endif
 
 ifeq (true,$(MODULE_BUILD_FROM_SOURCE))
@@ -159,6 +158,10 @@ $(call add_soong_config_var,ANDROID,SYSTEMUI_OPTIMIZE_JAVA)
 # Disable Compose in SystemUI by default.
 SYSTEMUI_USE_COMPOSE ?= false
 $(call add_soong_config_var,ANDROID,SYSTEMUI_USE_COMPOSE)
+
+ifdef PRODUCT_AVF_ENABLED
+$(call add_soong_config_var_value,ANDROID,avf_enabled,$(PRODUCT_AVF_ENABLED))
+endif
 
 # Enable system_server optimizations by default unless explicitly set or if
 # there may be dependent runtime jars.
