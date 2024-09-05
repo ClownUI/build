@@ -508,8 +508,13 @@ function lunch()
     CLOWN_DEVICE=$CLOWN_BUILD
     export CLOWN_DEVICE
 
+    local depsOnly=""
+    if [[ $(find ./device -type d -name "$CLOWN_DEVICE" -print -quit) != "" ]]; then
+        depsOnly="true"
+    fi
+
     cd $T > /dev/null
-    vendor/clown/build/tools/roomservice.py $product
+    vendor/clown/build/tools/roomservice.py $product $depsOnly
     cd - > /dev/null
 
     _lunch_meat $product $release $variant
